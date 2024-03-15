@@ -10,11 +10,12 @@ class Solution:
                 l = m + 1
             else:
                 r = m - 1"""
+            hmax = max(hmax, min(citations[m], n - m))
             if n - m >= citations[m]:
-                hmax = max(hmax, citations[m])
+                #hmax = max(hmax, citations[m])
                 l = m + 1
             else:
-                hmax = max(hmax, n - m)
+                #hmax = max(hmax, n - m)
                 r = m - 1
             
         
