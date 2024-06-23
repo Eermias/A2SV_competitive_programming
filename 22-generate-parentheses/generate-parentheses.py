@@ -1,30 +1,21 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        def isValid(par):
-            stack = []
-            for br in par:
-                if br == "(":
-                    stack.append("(")
-                else:
-                    if not stack:
-                        return False
-                    stack.pop()
-            return True if not stack else False
-
         combinations = []
-        def generate(n, comb):
-            if n == 0:
-                if isValid(comb):
-                    combinations.append(comb)
+        stack = []
+        def generate(open, close):
+            if open == close == n:
+                combinations.append("".join(stack))
                 return
-            generate(n - 1, comb + '(')
-            generate(n - 1, comb + ')')
-        
-        generate(2 * n, "")
+            if open > close:
+                stack.append(')')
+                generate(open, close + 1)
+                stack.pop()
+            if open < n:
+                stack.append('(')
+                generate(open + 1, close)
+                stack.pop()
+        generate(0, 0)
         return combinations
-        
-    
-
 
 
 
