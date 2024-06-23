@@ -9,6 +9,7 @@ class Solution:
             while window and curr_sum <= window[-1][1]:
                 window.pop()
             #print(window)
+            
             while window and curr_sum - window[0][1] >= k:
                 idx, prefix = window.popleft()
                 shortest = min(shortest, i - idx)
