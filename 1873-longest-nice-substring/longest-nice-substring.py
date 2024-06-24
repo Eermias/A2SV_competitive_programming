@@ -1,20 +1,21 @@
 class Solution:
     def longestNiceSubstring(self, s: str) -> str:
-        N = len(s)
-        maxlen = 0
-        start = 0
-        for i in range(N):
-            seen = set()
-            missing = 0
-            for j in range(i, N):
-                if s[j] not in seen: 
-                    seen.add(s[j])
-					
-                    if (s[j].lower() not in seen) or (s[j].upper() not in seen):
-                        missing += 1
-                    else: 
-                        missing -= 1
-                if missing == 0 and (j - i + 1) > maxlen:
-                    maxlen = j - i + 1
-                    start = i
-        return s[start:(start + maxlen)]
+        def longest(l, r):
+            if l > r:
+                return ""
+            
+            letters = set()
+            for c in s[l : r + 1]:
+                letters.add(c)
+            
+            for i in range(l, r + 1):
+                if s[i].lower() not in letters or s[i].upper() not in letters:
+                    left = longest(l, i - 1)
+                    right = longest(i + 1, r)
+                    if len(left) >= len(right):
+                        return left
+                    return right
+            
+            return s[l : r + 1]
+        
+        return longest(0, len(s) - 1)
