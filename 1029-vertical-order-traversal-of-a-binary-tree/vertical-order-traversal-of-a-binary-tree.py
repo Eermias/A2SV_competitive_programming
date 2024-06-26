@@ -11,9 +11,10 @@ class Solution:
             if not node:
                 return
             
+            levels[col].append((level, node.val))
             dfs(node.left, col - 1, level + 1)
             dfs(node.right, col + 1, level + 1)
-            levels[col].append((level, node.val))
+            
         
         dfs(root, 0, 0)
         keys = []
