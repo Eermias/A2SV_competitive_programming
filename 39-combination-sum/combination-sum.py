@@ -1,18 +1,18 @@
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         result = []
-        picked = []
-        def backtrack(i, curr):
-            if curr == target:
-                result.append(picked[:])
+        curr = []
+        def backtrack(i, curr_sum):
+            if curr_sum == target:
+                result.append(curr[:])
                 return
-            if i == len(candidates) or curr > target:
+            if curr_sum > target or i == len(candidates):
                 return
             
-            backtrack(i + 1, curr)
-            picked.append(candidates[i])
-            backtrack(i, curr + candidates[i])
-            picked.pop()
+            curr.append(candidates[i])
+            backtrack(i, curr_sum + candidates[i])
+            curr.pop()
+            backtrack(i + 1, curr_sum)
         
         backtrack(0, 0)
         return result
