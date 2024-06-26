@@ -3,21 +3,19 @@ class Solution:
         mix = [[difficulty[i], profit[i]] for i in range(len(profit))]
         mix.sort()
         worker.sort()
-        heap = []
+        best_job = 0
         
         max_profit = 0
         ptr1, ptr2 = 0, 0
         while ptr1 < len(worker) and ptr2 < len(mix):
             if worker[ptr1] >= mix[ptr2][0]:
-                heapq.heappush(heap, -mix[ptr2][1])
+                best_job = max(best_job, mix[ptr2][1])
                 ptr2 += 1
             else:
                 ptr1 += 1
-                if not heap:
-                    continue
-                max_profit += -heap[0]
+                max_profit += best_job
                 
         if ptr1 < len(worker):
-            max_profit += (len(worker) - ptr1) * (-heap[0])
+            max_profit += (len(worker) - ptr1) * (best_job)
         
         return max_profit
