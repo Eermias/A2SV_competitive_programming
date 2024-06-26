@@ -1,5 +1,6 @@
 class Solution:
     def maxDistance(self, position: List[int], m: int) -> int:
+
         def get_next(nxt):
             l, r = 0, len(position) - 1
             idx = float("inf")
@@ -11,6 +12,18 @@ class Solution:
                 else:
                     l = m + 1
             return idx
+        
+        def is_possible(mid):
+            count = 1
+            prev = 0
+            while count < m:
+                nxt = position[prev] + mid
+                prev = get_next(nxt)
+                if prev == float("inf"):
+                    return False
+                else:
+                    count += 1
+            return True
 
 
         position.sort()
@@ -19,17 +32,7 @@ class Solution:
         while low <= high:
             mid = (low + high) // 2
 
-            count = 1
-            prev = 0
-            while count < m:
-                nxt = position[prev] + mid
-                prev = get_next(nxt)
-                if prev == float("inf"):
-                    break
-                else:
-                    count += 1
-            
-            if count == m:
+            if is_possible(mid):
                 ans = mid
                 low = mid + 1
             else:
