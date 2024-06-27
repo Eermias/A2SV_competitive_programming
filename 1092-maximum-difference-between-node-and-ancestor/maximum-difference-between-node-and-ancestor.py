@@ -1,16 +1,17 @@
 class Solution:
     def maxAncestorDiff(self, root: Optional[TreeNode]) -> int:
-        maxVal = 0
+        max_diff = 0
+        q = deque()
+        q.append([root, root.val, root.val])
 
-        queue = deque([(root, root.val, root.val)])
-        while queue:
-            curr, high, low = queue.popleft()
-            currVal = curr.val
-            diff1, diff2 = currVal - low, high - currVal
-            maxVal = max(maxVal, diff1, diff2)
+        while q:
+            node, minn, maxx = q.popleft()
+            curr = node.val
+            max_diff = max(max_diff, curr - minn, maxx - curr)
 
-            if curr.left:
-                queue.append((curr.left, max(currVal, high), min(currVal, low)))
-            if curr.right:
-                queue.append((curr.right, max(currVal, high), min(currVal, low)))
-        return maxVal
+            if node.left:
+                q.append([node.left, min(minn, node.left.val), max(maxx, node.left.val)])
+            if node.right:
+                q.append([node.right, min(minn, node.right.val), max(maxx, node.right.val)])
+        
+        return max_diff
