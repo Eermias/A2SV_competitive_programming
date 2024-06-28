@@ -9,5 +9,5 @@ class Solution:
                 min_sum += (i - idx) * (idx - stack[-1][1]) * num
             
             stack.append([n, i])
-
+            
         return min_sum % (10**9 + 7)
