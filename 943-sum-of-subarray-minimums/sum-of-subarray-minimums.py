@@ -5,16 +5,12 @@ class Solution:
         for i, n in enumerate(arr):    
             while stack and stack[-1][0] > n:
                 num, idx = stack.pop()
-                left = i - idx
-                right = idx - stack[-1][1]
-                min_sum += left * right * num
+                min_sum += (i - idx) * (idx - stack[-1][1]) * num
             
             stack.append([n, i])
             
         for i in range(1, len(stack)):
             num, idx = stack[i]
-            left = len(arr) - idx
-            right = idx - stack[i - 1][1]
-            min_sum += left * right * num
+            min_sum += (len(arr) - idx) * (idx - stack[i - 1][1]) * num
 
         return min_sum % (10**9 + 7)
