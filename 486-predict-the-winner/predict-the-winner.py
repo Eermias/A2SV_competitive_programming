@@ -1,17 +1,18 @@
 class Solution:
     def predictTheWinner(self, nums: List[int]) -> bool:
-        memo = {}
-        def pick(l, r):
-            if (l, r) in memo:
-                return memo[(l, r)]
-            if l > r:
-                return 0
-            left = nums[l] - pick(l + 1, r)
-            right = nums[r] - pick(l, r - 1)
-            
-            memo[(l, r)] = max(left, right)
-            return memo[(l, r)]
+        n = len(nums)
+        dp = [[0] * n for _ in range(n)] #row = l, col = r
+        for i in range(n):
+            dp[i][i] = nums[i]
         
-        if pick(0, len(nums) - 1) >= 0:
+        for d in range(1, n):
+            for l in range(n - d):
+                r = l + d
+                left = nums[l] - dp[l + 1][r]
+                right = nums[r] - dp[l][r - 1]
+                dp[l][r] = max(left, right)
+        
+        #print(dp)
+        if dp[0][n - 1] >= 0:
             return True
         return False
