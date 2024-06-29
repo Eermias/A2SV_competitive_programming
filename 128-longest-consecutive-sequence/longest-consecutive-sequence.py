@@ -3,15 +3,22 @@ class Solution:
         sett = set(nums)
 
         longest = 0
-        for n in nums:
-            if n - 1 in sett:
-                continue
-            else:
-                count = 0
-                i = n
-                while i in sett:
-                    count += 1
-                    i += 1
-                longest = max(longest, count)
+        while sett:
+            n = sett.pop()
+            smaller = 0
+            l = n - 1
+            while l in sett:
+                sett.remove(l)
+                l -= 1
+                smaller += 1
+            
+            larger = 0
+            r = n + 1
+            while r in sett:
+                sett.remove(r)
+                r += 1
+                larger += 1
+            
+            longest = max(longest, smaller + larger + 1)
         
         return longest
