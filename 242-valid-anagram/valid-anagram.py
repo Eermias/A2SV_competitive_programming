@@ -8,7 +8,4 @@ class Solution:
             count_s[s[i]] += 1
             count_t[t[i]] += 1
         
-        for c in s:
-            if count_s[c] != count_t[c]:
-                return False
-        return True
+        return count_s == count_t
