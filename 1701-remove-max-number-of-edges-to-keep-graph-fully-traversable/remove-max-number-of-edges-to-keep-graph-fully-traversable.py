@@ -12,6 +12,8 @@ class Solution:
                 else:
                     parent[root1] = root2
                     size[root2] += size[root1]
+                return True
+            return False
 
         def find(alice, node):
             parent = alice_parent if alice else bob_parent
@@ -26,25 +28,23 @@ class Solution:
         bob_size = {i : 1 for i in range(1, n + 1)}
 
         edges.sort(reverse = True)
-        removed = 0
+        not_needed = 0
         for typ, node1, node2 in edges:
             if typ == 3:
-                if (find(True, node1) == find(True, node2) and
-                    find(False, node1) == find(False, node2)):
-                    removed += 1
+                if union(True, node1, node2) and union(False, node1, node2):
+                    continue
                 else:
-                    union(True, node1, node2)
                     union(False, node1, node2)
+                    not_needed += 1
+            
             elif typ == 1:
-                if find(True, node1) == find(True, node2):
-                    removed += 1
-                else:
-                    union(True, node1, node2)
+                if not union(True, node1, node2):
+                    not_needed += 1
+                
             else:
-                if find(False, node1) == find(False, node2):
-                    removed += 1
-                else:
-                    union(False, node1, node2)
+                if not union(False, node1, node2):
+                    not_needed += 1
+    
         
         alice, bob = set(), set()
         for i in range(1, n + 1):
@@ -52,7 +52,7 @@ class Solution:
             bob.add(find(False, i))
         
         if len(alice) == len(bob) == 1:
-            return removed
+            return not_needed
         return -1
                 
 
