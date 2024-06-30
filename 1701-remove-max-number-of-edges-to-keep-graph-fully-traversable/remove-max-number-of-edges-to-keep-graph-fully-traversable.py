@@ -16,7 +16,8 @@ class Solution:
         def find(alice, node):
             parent = alice_parent if alice else bob_parent
             while node != parent[node]:
-                node = parent[node]
+                temp = parent[node]
+                node = parent[temp]
             return node
         
         alice_parent = {i : i for i in range(1, n + 1)}
