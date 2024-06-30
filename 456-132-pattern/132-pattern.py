@@ -8,10 +8,10 @@ class Solution:
                 num, min_pop = stack.pop()
                 minn = min(minn, min_pop)
             
-            for i in range(len(stack)):
+            for i in range(len(stack) - 1, -1, -1):
                 if stack[i][0] == stack[i][1]:
                     continue
-                elif stack[i][1] < n:
+                if stack[-1][1] < n:
                     #print(stack)
                     return True
             stack.append([n, minn])
