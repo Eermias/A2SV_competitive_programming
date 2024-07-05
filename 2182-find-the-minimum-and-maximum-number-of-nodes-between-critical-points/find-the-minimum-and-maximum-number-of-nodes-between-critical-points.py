@@ -11,22 +11,24 @@ class Solution:
             return [-1, -1]
         _next = curr.next 
 
-        criticals = []
+        first, last = -1, -1
         idx = 1
         minn = float("inf")
         while _next:
             if ((curr.val > prev.val and curr.val > _next.val) or
                 (curr.val < prev.val and curr.val < _next.val)):
-                if criticals:
-                    minn = min(minn, idx - criticals[-1])
-                criticals.append(idx)
+                if first == -1:
+                    first = idx
+                else:
+                    minn = min(minn, idx - last)
+                last = idx
             prev = curr
             curr = _next
             _next = _next.next
             idx += 1
         
-        if len(criticals) < 2:
+        if last == first:
             return [-1, -1]
-        return [minn, criticals[-1] - criticals[0]]
+        return [minn, last - first]
 
             
