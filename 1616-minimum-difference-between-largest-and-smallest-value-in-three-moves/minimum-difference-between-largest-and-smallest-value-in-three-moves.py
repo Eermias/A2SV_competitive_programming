@@ -4,9 +4,8 @@ class Solution:
         if len(nums) <= 4:
             return 0
         
-        l, r = 3, len(nums) - 1
-        res = min(nums[r] - nums[l], 
-                  nums[r - 1] - nums[l - 1],
-                  nums[r - 2] - nums[l - 2],
-                  nums[r - 3] - nums[ l - 3])
+        res = min(nums[-1] - nums[3], 
+                  nums[-2] - nums[2],
+                  nums[-3] - nums[1],
+                  nums[-4] - nums[0])
         return res
