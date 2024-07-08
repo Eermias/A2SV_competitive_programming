@@ -3,12 +3,16 @@ class Solution:
         l, r = 0, len(nums) - 1
         minn = nums[0]
         while l <= r:
+            if nums[l] <= nums[r]:
+                minn = min(minn, nums[l])
+                break
+                
             m = (l + r) // 2
             minn = min(minn, nums[m])
             #m in left rotated portion
             if nums[m] > nums[r]:
                 l = m + 1
-                
+
             #m in right rotated portion
             else:
                 r = m - 1
