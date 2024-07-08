@@ -25,7 +25,7 @@ class Solution:
                     
         
         row = get_row(0, len(matrix) - 1)
-        if get_target(matrix[row]):
+        if matrix[row][0] <= target <= matrix[row][-1] and get_target(matrix[row]):
             return True
         return False
         
