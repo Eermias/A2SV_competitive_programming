@@ -6,7 +6,7 @@ class Solution:
             speed = (low + high) // 2
             time = 0
             for pile in piles:
-                time += max(1, (pile + speed - 1) // speed)
+                time += ceil(pile / speed)
             
             if time <= h:
                 min_speed = speed
