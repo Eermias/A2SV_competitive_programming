@@ -3,16 +3,16 @@ class Solution:
         low, high = 1, max(piles)
         min_speed = high
         while low <= high:
-            mid = (low + high) // 2
+            speed = (low + high) // 2
             time = 0
             for pile in piles:
-                time += max(1, (pile + mid - 1) // mid)
+                time += max(1, (pile + speed - 1) // speed)
             
             if time <= h:
-                min_speed = mid
-                high = mid - 1
+                min_speed = speed
+                high = speed - 1
             else:
-                low = mid + 1
+                low = speed + 1
         return min_speed
         
         
