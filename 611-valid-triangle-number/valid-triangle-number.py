@@ -2,14 +2,13 @@ class Solution:
     def triangleNumber(self, nums: List[int]) -> int:
         nums.sort()
         count = 0
-
-        for k in range(len(nums) - 1, 1, -1):
-            i, j = 0, k - 1
-            while i < j:
-                if nums[i] + nums[j] > nums[k]:
-                    count += j - i
-                    j -= 1
+        n = len(nums)
+        for c in range(n - 1, 1, -1):
+            a, b = 0, c - 1
+            while a < b:
+                if nums[a] + nums[b] > nums[c]:
+                    count += b - a
+                    b -= 1
                 else:
-                    i += 1
-
+                    a += 1
         return count
