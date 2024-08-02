@@ -16,4 +16,3 @@ class Solution:
                 if r in rows or c in cols:
                     matrix[r][c] = 0
         
-        return matrix
