@@ -7,7 +7,7 @@ class Solution:
                 return m
             elif nums[m] < target:
                 #check if nums[m] is in the left rotated portion
-                if nums[r] <= nums[l] <= nums[m]:
+                if nums[r] < nums[l] <= nums[m]:
                     l = m + 1
                 else:
                     if target > nums[r]:
@@ -16,7 +16,7 @@ class Solution:
                         l = m + 1
             else:
                 #check if nums[m] is in the left rotated portion
-                if nums[r] <= nums[l] <= nums[m]:
+                if nums[r] < nums[l] <= nums[m]:
                     if target < nums[l]:
                         l = m + 1
                     else:
