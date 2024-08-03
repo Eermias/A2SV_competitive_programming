@@ -3,24 +3,29 @@ class Solution:
         l, r = 0, len(nums) - 1
         while l <= r:
             m = (l + r) // 2
-            if target == nums[m]:
+            if nums[m] == target:
                 return m
-            elif target > nums[m]:
-                if nums[l] >= nums[r] >= nums[m]:
+            elif nums[m] < target:
+                #if nums[m] is in the left rotated portion
+                if nums[r] <= nums[l] <= nums[m]:
+                    l = m + 1
+                elif nums[m] <= nums[r] <= nums[l]:
                     if target <= nums[r]:
                         l = m + 1
                     else:
                         r = m - 1
-                
                 else:
                     l = m + 1
             else:
-                if nums[m] >= nums[l] >= nums[r]:
+                #if nums[m] is in the left rotated portion
+                if nums[r] <= nums[l] <= nums[m]:
                     if target >= nums[l]:
                         r = m - 1
                     else:
                         l = m + 1
-                
+                elif nums[m] <= nums[r] <= nums[l]:
+                    r = m - 1
                 else:
                     r = m - 1
+
         return -1
