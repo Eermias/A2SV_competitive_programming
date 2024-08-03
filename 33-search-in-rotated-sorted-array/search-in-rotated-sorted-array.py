@@ -9,23 +9,19 @@ class Solution:
                 #if nums[m] is in the left rotated portion
                 if nums[r] <= nums[l] <= nums[m]:
                     l = m + 1
-                elif nums[m] <= nums[r] <= nums[l]:
+                else:
                     if target <= nums[r]:
                         l = m + 1
                     else:
                         r = m - 1
-                else:
-                    l = m + 1
             else:
                 #if nums[m] is in the left rotated portion
-                if nums[r] <= nums[l] <= nums[m]:
+                if nums[m] <= nums[r] <= nums[l]:
+                    r = m - 1
+                else:
                     if target >= nums[l]:
                         r = m - 1
                     else:
                         l = m + 1
-                elif nums[m] <= nums[r] <= nums[l]:
-                    r = m - 1
-                else:
-                    r = m - 1
 
         return -1
