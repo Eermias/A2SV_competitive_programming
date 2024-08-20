@@ -3,20 +3,20 @@ class Solution:
         candidates.sort()
         result = []
         curr = []
-        def backtrack(i, curr_sum):
-            if curr_sum == target:
-                result.append(curr[:])
-                return
-            if curr_sum > target or i == len(candidates):
+        def backtrack(i, summ):
+            if i == len(candidates) or summ >= target:
+                if summ == target:
+                    result.append(curr[:])
                 return
             
             curr.append(candidates[i])
-            backtrack(i + 1, curr_sum + candidates[i])
-            curr.pop()
+            backtrack(i + 1, summ + candidates[i])
+            j = i + 1
+            while j < len(candidates) and candidates[j] == candidates[i]:
+                j += 1
 
-            while i + 1 < len(candidates) and candidates[i] == candidates[i + 1]:
-                i += 1
-            backtrack(i + 1, curr_sum)
+            curr.pop()
+            backtrack(j, summ)
         
         backtrack(0, 0)
         return result
