@@ -1,20 +1,17 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        perms = []
-        curr = []
-        used = set()
-        def backtrack():
-            if len(curr) == len(nums):
-                perms.append(curr[:])
-                return
-            
-            for n in nums:
-                if n not in used:
-                    curr.append(n)
-                    used.add(n)
-                    backtrack()
-                    curr.pop()
-                    used.remove(n)
-        
-        backtrack()
-        return perms
+        res = []
+
+        # base case
+        if len(nums) == 1:
+            return [nums[:]]  # nums[:] is a deep copy
+
+        for i in range(len(nums)):
+            n = nums.pop(0)
+            perms = self.permute(nums)
+
+            for perm in perms:
+                perm.append(n)
+            res.extend(perms)
+            nums.append(n)
+        return res
