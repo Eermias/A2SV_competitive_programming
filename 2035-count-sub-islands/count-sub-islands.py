@@ -19,7 +19,6 @@ class Solution:
         sub_islands = 0
         for r in range(len(grid1)):
             for c in range(len(grid1[0])):
-                #print(visited)
                 if grid2[r][c] == 1 and (r, c) not in visited and dfs(r, c):
                     sub_islands += 1
                     #print(r, c, visited)
