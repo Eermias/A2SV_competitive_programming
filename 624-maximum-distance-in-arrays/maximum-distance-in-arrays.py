@@ -1,16 +1,12 @@
 class Solution:
     def maxDistance(self, arrays: List[List[int]]) -> int:
-        minn = defaultdict(int)
-        for arr in arrays:
-            minn[arr[0]] += 1
-        
-        mins = list(minn.keys())
-        mins.sort()
-        min1 = mins[0]
-        if minn[mins[0]] > 1:
-            min2 = mins[0]
-        else:
-            min2 = mins[1]
+        min1, min2 = float("inf"), float("inf")
+        for array in arrays:
+            if array[0] <= min1:
+                min2 = min1
+                min1 = array[0]
+            elif array[0] < min2:
+                min2 = array[0]
         
         max_dis = 0
         for arr in arrays:
