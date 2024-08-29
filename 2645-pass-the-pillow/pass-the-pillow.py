@@ -1,8 +1,16 @@
 class Solution:
     def passThePillow(self, n: int, time: int) -> int:
-        rounds = time // (2 * (n - 1))
-        left = time - rounds * 2 * (n - 1)
-        if left > n - 1:
-            left -= n - 1
-            return n - left
-        return 1 + left
+        curr = 1
+        forward = True
+        while time > 0:
+            if forward:
+                curr += 1
+                if curr == n:
+                    forward = not forward
+            else:
+                curr -= 1
+                if curr == 1:
+                    forward = not forward
+            time -= 1
+            
+        return curr
