@@ -6,9 +6,7 @@ class Solution:
             matrix = []
             for i in range(m):
                 start = n * i
-                row = []
-                for j in range(start, start + n):
-                    row.append(original[j])
+                row = original[start : start + n]
                 matrix.append(row)
             
             return matrix
