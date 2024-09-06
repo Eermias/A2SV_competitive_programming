@@ -8,11 +8,8 @@ class Solution:
         else:
             ans = [1] * n
             for i in range(n):
-                if more >= 5:
-                    ans[i] += 5
-                    more -= 5
-                else:
-                    ans[i] += more
-                    break
+                minn = min(more, 5)
+                ans[i] += minn
+                more -= minn
             
             return ans
