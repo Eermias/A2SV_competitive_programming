@@ -1,32 +1,44 @@
 class Solution:
+
     def maximumGap(self, nums: List[int]) -> int:
-        n = len(nums)
-        if n < 2:
+        if len(nums) < 2:
             return 0
-        
-        # compute the maximum and minimum values
-        max_value, min_value = max(nums), min(nums)
-        
-        # compute the size of each bucket
-        bucket_size = max(1, (max_value - min_value) // (n - 1))
-        
-        # compute the number of buckets
-        num_buckets = (max_value - min_value) // bucket_size + 1
-        
-        # initialize the buckets with maximum and minimum values
-        buckets = [[float('inf'), float('-inf')] for _ in range(num_buckets)]
+
+        # Step 1: Find the minimum and maximum values
+        min_val, max_val = min(nums), max(nums)
+        n = len(nums)
+
+        # Step 2: Compute the minimum possible maximum gap
+        gap = math.ceil((max_val - min_val) / (n - 1))
+        if gap == 0:
+            return 0  # All numbers are the same
+
+        # Step 3: Initialize buckets
+        buckets_min = [float('inf')] * (n - 1)
+        buckets_max = [float('-inf')] * (n - 1)
+
+        # Step 4: Populate the buckets
         for num in nums:
-            bucket_index = (num - min_value) // bucket_size
-            buckets[bucket_index][0] = min(buckets[bucket_index][0], num)
-            buckets[bucket_index][1] = max(buckets[bucket_index][1], num)
-        
-        # compute the maximum difference
-        max_diff = 0
-        prev_max = buckets[0][1]
-        for i in range(1, num_buckets):
-            if buckets[i][0] == float('inf'):
-                continue
-            max_diff = max(max_diff, buckets[i][0] - prev_max)
-            prev_max = buckets[i][1]
-        
-        return max_diff
+            if num == min_val or num == max_val:
+                continue  # Skip min and max
+            idx = (num - min_val) // gap
+            buckets_min[idx] = min(num, buckets_min[idx])
+            buckets_max[idx] = max(num, buckets_max[idx])
+
+        # Step 5: Calculate the maximum gap
+        max_gap = 0
+        prev = min_val
+
+        for i in range(n - 1):
+            if buckets_min[i] == float('inf') and buckets_max[i] == float('-inf'):
+                continue  # Skip empty buckets
+
+            # Calculate gap between buckets
+            max_gap = max(max_gap, buckets_min[i] - prev)
+            prev = buckets_max[i]
+
+        # Compare with the maximum value
+        max_gap = max(max_gap, max_val - prev)
+
+        return max_gap
+
