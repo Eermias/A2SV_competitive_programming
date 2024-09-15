@@ -1,15 +1,13 @@
 class Solution:
     def findTheLongestSubstring(self, s: str) -> int:
         first = {0 : -1}
-        freq = defaultdict(int)
+        vowels = {'a':0, 'e':1, 'i':2, 'o':3, 'u':4}
 
         longest = 0
-        for i in range(len(s)):
-            freq[s[i]] += 1
-            mask = 0
-            for j, c in enumerate("aeiou"):
-                if freq[c] % 2:
-                    mask |= (1 << j)
+        mask = 0
+        for i, c in enumerate(s):
+            if c in vowels:
+                mask ^= (1 << vowels[c])
             
             if mask in first:
                 longest = max(longest, i - first[mask])
