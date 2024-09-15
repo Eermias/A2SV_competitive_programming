@@ -1,6 +1,6 @@
 class Solution:
     def findTheLongestSubstring(self, s: str) -> int:
-        prev = {0 : -1}
+        first = {0 : -1}
         freq = defaultdict(int)
 
         longest = 0
@@ -11,9 +11,9 @@ class Solution:
                 if freq[c] % 2:
                     mask |= (1 << j)
             
-            if mask in prev:
-                longest = max(longest, i - prev[mask])
+            if mask in first:
+                longest = max(longest, i - first[mask])
             else:
-                prev[mask] = i
+                first[mask] = i
         
         return longest
