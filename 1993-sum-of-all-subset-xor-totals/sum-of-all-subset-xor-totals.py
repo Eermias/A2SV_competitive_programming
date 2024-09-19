@@ -7,8 +7,9 @@ class Solution:
                 total += curr
                 return
             
-            backtrack(i + 1, curr)
+            #pick or skip respectively
             backtrack(i + 1, curr ^ nums[i])
+            backtrack(i + 1, curr)
         
         backtrack(0, 0)
         return total
