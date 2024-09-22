@@ -1,23 +1,25 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        n = len(nums)
-        count = Counter(nums)
-        nums = list(set(nums))
+        nums.sort()
 
         perms = []
+        mask = 0
         def backtrack(curr):
-            if len(curr) == n:
+            if len(curr) == len(nums):
                 perms.append(curr[:])
                 return
             
+            nonlocal mask
             for i in range(len(nums)):
-                if count[nums[i]] > 0:
+                if i > 0 and nums[i] == nums[i - 1] and mask & (1 << (i - 1)) == 0:
+                    continue
+                elif mask & (1 << i) == 0:
                     curr.append(nums[i])
-                    count[nums[i]] -= 1
+                    mask |= (1 << i)
                     backtrack(curr)
 
                     curr.pop()
-                    count[nums[i]] += 1
+                    mask ^= (1 << i)
         
         backtrack([])
         return perms
