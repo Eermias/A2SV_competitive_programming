@@ -17,5 +17,5 @@ class Solution:
             for dr, dc in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
                 new_row = row + dr
                 new_col = col + dc
-                if -1 < new_row < m and -1 < new_col < n:
+                if -1 < new_row < m and -1 < new_col < n and (new_row, new_col) not in processed:
                     heapq.heappush(heap, (dist + grid[new_row][new_col], new_row, new_col))
