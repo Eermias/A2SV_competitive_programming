@@ -1,32 +1,35 @@
 class Solution:
     def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
-        ans, min_reachable = -1, n + 1
+        # initialize distance matrix
+        distance = [[float('inf')] * n for _ in range(n)]
 
+        # initialize distance from each node to itself to 0
+        for i in range(n):
+            distance[i][i] = 0
+
+        # populate the initial give edges
+        for u, v, w in edges:
+            distance[u][v] = distance[v][u] = w
+
+        # apply Floyd - Warshall's algorithm
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
+                    distance[i][j] = min(distance[i][j], distance[i][k] + distance[k][j])
+
+        # count the number of reachable cities from each city within the distanceThreshold
+        reachable = [0] * n
+        for i in range(n):
+            for j in range(n):
+                if distance[i][j] <= distanceThreshold:
+                    reachable[i] += 1
+
+        # find the largest numbered city with the lowest number of reachble cities 
+        min_reachable = float('inf')
+        desired_city = -1
         for city in range(n):
-            distances = [float('inf') for _ in range(n)]
-            distances[city] = 0
-
-            for _ in range(n):
-                relaxed = False
-                for src, dest, weight in edges:
-                    if distances[dest] > distances[src] + weight:
-                        distances[dest] = distances[src] + weight
-                        relaxed = True
-                    if distances[src] > distances[dest] + weight:
-                        distances[src] = distances[dest] + weight
-                        relaxed = True
-
-                if not relaxed:
-                    break
-            
-            
-            reachable = 0
-            for distance in distances:
-                if distance <= distanceThreshold:
-                    reachable += 1
-            
-            if reachable <= min_reachable:
-                ans = city
-                min_reachable = reachable
+            if reachable[city] <= min_reachable:
+                min_reachable = reachable[city]
+                desired_city = city
         
-        return ans
+        return desired_city
