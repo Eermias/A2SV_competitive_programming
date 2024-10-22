@@ -10,7 +10,6 @@ class Solution:
             if (row, col) in processed:
                 continue
             
-            #print(row, col)
             if row == m - 1 and col == n - 1:
                 return dist
 
