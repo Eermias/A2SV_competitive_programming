@@ -1,25 +1,21 @@
 class Solution:
     def minimumObstacles(self, grid: List[List[int]]) -> int:
-        m = len(grid)
-        n = len(grid[0])
+        m, n = len(grid), len(grid[0])
+
+        heap = [(0, 0, 0)] 
         processed = set()
-
-        def inbound(i,j):
-            return 0 <= i < m and 0 <= j < n
-        
-        d = [(0,1),(0,-1),(1,0),(-1,0)]
-
-        heap = [(0,0,0)]
-        
-
         while heap:
-            dis, posx, posy = heappop(heap)
-            for x,y in d:
-                if inbound(posx + x,posy + y) and (posx + x,posy + y) not in processed:
-                    processed.add((posx + x,posy + y))
-                    heappush(heap,(dis + grid[posx + x][posy + y],posx + x,posy + y))
-                
-                if posx + x == m - 1 and posy + y == n - 1:
-                    return dis
-        
-        #return dis
+            dist, row, col = heapq.heappop(heap)
+            
+            if (row, col) in processed:
+                continue
+            
+            if row == m - 1 and col == n - 1:
+                return dist
+
+            processed.add((row, col))
+            for dr, dc in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+                new_row = row + dr
+                new_col = col + dc
+                if -1 < new_row < m and -1 < new_col < n and (new_row, new_col) not in processed:
+                    heapq.heappush(heap, (dist + grid[new_row][new_col], new_row, new_col))
