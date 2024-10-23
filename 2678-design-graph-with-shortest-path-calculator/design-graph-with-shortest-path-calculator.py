@@ -1,42 +1,30 @@
 class Graph:
 
     def __init__(self, n: int, edges: List[List[int]]):
-        self.shortest = [[float('inf')] * n for _ in range(n)]
-        self.n = n
-
-        for i in range(n):
-            self.shortest[i][i] = 0
-        
+        self.graph = {i: [] for i in range(n)}
         for u, v, weight in edges:
-            self.shortest[u][v] = weight
-        
-        for k in range(n):
-            for i in range(n):
-                for j in range(n):
-                    if self.shortest[i][j] > self.shortest[i][k] + self.shortest[k][j]:
-                        self.shortest[i][j] = self.shortest[i][k] + self.shortest[k][j]
-        
-
-    def relax(self, u, v):
-            for i in range(self.n):
-                for j in range(self.n):
-                    prev = self.shortest[i][u]
-                    after = self.shortest[v][j]
-                    if self.shortest[i][j] > prev + self.shortest[u][v] + after:
-                        self.shortest[i][j] = prev + self.shortest[u][v] + after
-        
+            self.graph[u].append((v, weight))
 
     def addEdge(self, edge: List[int]) -> None:
         u, v, weight = edge
-        if self.shortest[u][v] > weight:
-            self.shortest[u][v] = weight
-            self.relax(u, v)
+        self.graph[u].append((v, weight))
 
     def shortestPath(self, node1: int, node2: int) -> int:
+        pq = [(0, node1)]
+        cost = [inf] * len(self.graph)
 
-        res = self.shortest[node1][node2]
-        return res if res != float('inf') else -1
-        
+        while pq:
+            weight, node = heapq.heappop(pq)
+            if weight > cost[node]:
+                continue
+            if node == node2:
+                return weight
+            for nbr, w in self.graph[node]:
+                new_cost = weight + w
+                if new_cost < cost[nbr]:
+                    cost[nbr] = new_cost
+                    heappush(pq, (new_cost, nbr))
+        return -1
 
 
 # Your Graph object will be instantiated and called as such:
