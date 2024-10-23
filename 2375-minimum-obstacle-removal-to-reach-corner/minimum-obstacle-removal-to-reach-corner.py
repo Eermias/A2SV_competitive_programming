@@ -3,14 +3,13 @@ class Solution:
         m, n = len(grid), len(grid[0])
 
         heap = [(0, 0, 0)] 
-        processed = set()
+        processed = {(0, 0)}
         while heap:
             dist, row, col = heapq.heappop(heap)
             
             if row == m - 1 and col == n - 1:
                 return dist
-
-            processed.add((row, col))
+ 
             for dr, dc in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
                 new_row = row + dr
                 new_col = col + dc
