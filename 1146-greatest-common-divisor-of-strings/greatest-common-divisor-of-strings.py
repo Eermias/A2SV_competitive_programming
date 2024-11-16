@@ -1,23 +1,9 @@
 class Solution:
     def gcdOfStrings(self, str1: str, str2: str) -> str:
-        ans = 0
-        for i in range(1, len(str2) + 1):
-            gcd = str2[:i]
-            if len(str1) % i:
-                continue
-            okay = True
-            for j in range(0, len(str1), i):
-                if str1[j : j + i] != gcd:
-                    okay = False
-                    break
+        # Check if they have non-zero GCD string.
+        if str1 + str2 != str2 + str1:
+            return ""
 
-            for j in range(0, len(str2), i):
-                if str2[j : j + i] != gcd:
-                    okay = False
-                    break
-
-            if okay:
-                ans = i
-        
-        return str2[:ans]
-
+        # Get the GCD of the two lengths.
+        max_length = gcd(len(str1), len(str2))
+        return str1[:max_length]
