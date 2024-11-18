@@ -1,10 +1,10 @@
 class Solution:
     def maxPoints(self, points: List[List[int]]) -> int:
         rows, cols = len(points), len(points[0])
-        prev = [0] * cols
         for r in range(rows):
-            for i in range(cols):
-                points[r][i] += prev[i]
+            if r > 0:
+                for i in range(cols):
+                    points[r][i] += points[r - 1][i]
 
             left = points[r].copy()
             for i in range(cols - 2, -1, -1):
@@ -16,10 +16,7 @@ class Solution:
             
             for i in range(cols):
                 points[r][i] = max(left[i], right[i])
-                
-            prev = points[r].copy()
         
-        print(points)
-        return max(prev)
+        return max(points[-1])
 
 
