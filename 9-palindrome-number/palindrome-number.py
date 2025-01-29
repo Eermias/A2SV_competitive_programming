@@ -1,13 +1,11 @@
 class Solution:
     def isPalindrome(self, x: int) -> bool:
+        if x < 0:
+            return False
+            
+        digits = []
+        while x:
+            digits.append(x % 10)
+            x //= 10
         
-        x = str(x)
-        l, r = 0, len(x) - 1
-        is_palindrome = True
-        while l < r:
-            if x[l] != x[r]:
-                is_palindrome = False
-                return is_palindrome
-            l += 1
-            r -= 1
-        return is_palindrome
+        return digits == digits[::-1]
