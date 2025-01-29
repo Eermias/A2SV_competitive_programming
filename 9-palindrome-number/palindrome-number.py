@@ -5,7 +5,7 @@ class Solution:
 
         reverse = 0
         original = x
-        p = 0
+        
         while x:
             reverse += (x % 10)
             reverse *= 10
