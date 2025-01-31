@@ -1,77 +1,54 @@
 class Solution:
     def largestIsland(self, grid: List[List[int]]) -> int:
-        n = len(grid)
-
-        def union(node1, node2):
-            root1 = find(node1)
-            root2 = find(node2)
-
-            if root1 != root2:
-                if size[root1] >= size[root2]:
-                    parent[root2] = root1
-                    size[root1] += size[root2]
-                else:
-                    parent[root1] = root2 
-                    size[root2] += size[root1]
-
-        def find(node):
-            while node != parent[node]:
-                node = parent[node]
-            return node
+        res = 1
+        bounds = {}
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                if grid[i][j] != 1:
+                    continue
+                curr_size = 1
+                grid[i][j] = -1
+                queue = collections.deque([(i,j)])
+                curr_bounds = set()
+                while queue:
+                    r,c = queue.popleft()
+                    if r-1 >= 0:
+                        if grid[r-1][c] == 0:
+                            curr_bounds.add((r-1,c))
+                        elif grid[r-1][c] == 1:
+                            curr_size += 1
+                            grid[r-1][c] = -1
+                            queue.append((r-1, c))
+                    if c-1 >= 0:
+                        if grid[r][c-1] == 0:
+                            curr_bounds.add((r, c-1))
+                        elif grid[r][c-1] == 1:
+                            curr_size+= 1
+                            grid[r][c-1] = -1
+                            queue.append((r, c-1))
+                    if r+1<len(grid):
+                        if grid[r+1][c] == 0:
+                            curr_bounds.add((r+1,c))
+                        elif grid[r+1][c] == 1:
+                            curr_size += 1
+                            grid[r+1][c] = -1
+                            queue.append((r+1, c))
+                    if c+1<len(grid[i]):
+                        if grid[r][c+1] == 0:
+                            curr_bounds.add((r,c+1))
+                        elif grid[r][c+1] == 1:
+                            curr_size += 1
+                            grid[r][c+1] = -1
+                            queue.append((r, c+1))
+                best_join = 0
+                
+                for loc in curr_bounds:
+                    if loc in bounds:
+                        best_join = max(bounds[loc], best_join)
+                        bounds[loc] += curr_size
+                    else:
+                        bounds[loc] = curr_size
+                res = max(res, best_join+curr_size+1 if curr_bounds else curr_size)
+        return res
+                
         
-        parent = {}
-        size = {}
-        for r in range(n):
-            for c in range(n):
-                parent[(r, c)] = (r, c)
-                size[(r, c)] = 1 if grid[r][c] == 1 else 0
-
-        
-        for r in range(n):
-            for c in range(n):
-                if grid[r][c] == 1:
-                    for dr, dc in [(-1, 0), (0, -1), (1, 0), (0, 1)]:
-                        nr = r + dr
-                        nc = c + dc
-                        if -1 < nr < n and -1 < nc < n:
-                            if grid[nr][nc] == 1:
-                                union((r, c), (nr, nc))
-
-        ans = max(size.values())
-        
-        for r in range(n):
-            for c in range(n):
-                if grid[r][c] == 0:
-                    max1, max2, max3, max4 = 0, 0, 0, 0
-                    roots = []
-                    for dr, dc in [(-1, 0), (0, -1), (1, 0), (0, 1)]:
-                        nr = r + dr
-                        nc = c + dc
-                        
-                        if -1 < nr < n and -1 < nc < n:
-                            roots.append(find((nr, nc)))
-                        
-                    roots = list(set(roots))
-                    
-                    for root in roots:
-                        if size[root] > max1:
-                            max4 = max3
-                            max3 = max2
-                            max2 = max1
-                            max1 = size[root]
-                        elif size[root] > max2:
-                            max4 = max3
-                            max3 = max2
-                            max2 = size[root]
-                        elif size[root] > max3:
-                            max4 = max3
-                            max3 = size[root]
-                        elif size[root] > max4:
-                            max4 = size[root]
-                    
-                    ans = max(ans, max1 + max2 + max3 + max4 + 1)
-
-        return ans
-
-
-
