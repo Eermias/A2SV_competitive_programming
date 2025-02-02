@@ -7,6 +7,10 @@ class Solution:
                 idx = i
                 break
 
-    
-        original = nums[idx:] + nums[:idx]
-        return idx == -1 or sorted(original) == original
+
+        original = nums[idx:] + nums[:idx] if idx != -1 else nums
+
+        for i in range(1, len(nums)):
+            if original[i] < original[i - 1]:
+                return False
+        return True
