@@ -1,33 +1,29 @@
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         spiral = []
-        matrix = deque(matrix)
+        matrix = deque([deque(row) for row in matrix])
 
         while matrix:
             top = matrix.popleft()
-            top = top[::-1]
             while top:
-                spiral.append(top.pop())
+                spiral.append(top.popleft())
+            
+            while matrix and not matrix[0]:
+                matrix.popleft()
 
             for row in matrix:
                 spiral.append(row.pop())
             
             while matrix and not matrix[-1]:
                 matrix.pop()
-            
+
             if matrix:
                 bot = matrix.pop()
                 while bot:
                     spiral.append(bot.pop())
-            
-
-            for i in range(len(matrix) - 1, -1, -1):
-                matrix[i] = matrix[i][::-1]
-                spiral.append(matrix[i].pop())
-                matrix[i] = matrix[i][::-1]
-            
-            while matrix and not matrix[-1]:
-                matrix.pop()
+                
+            for col in range(len(matrix) - 1, -1, -1):
+                spiral.append(matrix[col].popleft())
         
         return spiral
 
