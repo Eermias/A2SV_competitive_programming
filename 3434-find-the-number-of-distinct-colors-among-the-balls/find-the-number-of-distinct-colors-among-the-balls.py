@@ -5,9 +5,7 @@ class Solution:
         ans = []
         curr = 0
         for x, y in queries:
-            if colors[x] == y:
-                ans.append(curr)
-            else:
+            if colors[x] != y:
                 count[colors[x]] -= 1
                 if count[colors[x]] == 0:
                     curr -= 1
@@ -17,8 +15,8 @@ class Solution:
                 if count[y] == 1:
                     curr += 1
                 
-                ans.append(curr)
-                
+            ans.append(curr)
+
         return ans
 
 
