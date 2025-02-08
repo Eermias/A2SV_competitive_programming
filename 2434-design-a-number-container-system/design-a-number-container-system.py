@@ -1,26 +1,23 @@
 class NumberContainers:
 
     def __init__(self):
-        self.min_index = defaultdict(list)
-        self.options = defaultdict(set)
-        self.indices = {}
+        self.nums = defaultdict(list)
+        self.indices = defaultdict(int)
         
 
     def change(self, index: int, number: int) -> None:
-        if index in self.indices:
-            self.options[self.indices[index]].remove(index)
         self.indices[index] = number
-        heappush(self.min_index[number], index)
-        self.options[number].add(index)
-
+        heappush(self.nums[number], index)
 
     def find(self, number: int) -> int:
-        while self.min_index[number] and self.min_index[number][0] not in self.options[number]:
-            heappop(self.min_index[number])
-
-        if not self.min_index[number]:
-            return -1
-        return self.min_index[number][0]
+        while self.nums[number]:
+            if self.indices[ self.nums[number][0]] != number:
+                heappop(self.nums[number])
+            else:
+                return self.nums[number][0]
+        
+        return -1
+    
             
         
 
