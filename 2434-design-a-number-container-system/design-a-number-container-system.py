@@ -6,8 +6,9 @@ class NumberContainers:
         
 
     def change(self, index: int, number: int) -> None:
-        self.indices[index] = number
-        heappush(self.nums[number], index)
+        if self.indices[index] != number:
+            self.indices[index] = number
+            heappush(self.nums[number], index)
 
     def find(self, number: int) -> int:
         while self.nums[number]:
