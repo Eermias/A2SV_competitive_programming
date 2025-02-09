@@ -3,12 +3,13 @@ class Solution:
 
         n = len(nums)
 
-        good_pairs = defaultdict(int)
+        count = defaultdict(int)
         for i in range(n):
-            good_pairs[nums[i] - i] += 1
+            count[nums[i] - i] += 1
         
-        bad_pairs = (n * (n - 1)) // 2
-        for value, count in good_pairs.items():
-            bad_pairs -= (count * (count - 1)) // 2
+        total = (n * (n - 1)) // 2
+        good_pairs = 0
+        for val, cnt in count.items():
+            good_pairs += (cnt * (cnt - 1)) // 2
         
-        return bad_pairs
+        return total - good_pairs
