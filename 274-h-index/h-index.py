@@ -4,12 +4,10 @@ class Solution:
 
         citations.sort()
 
-        max_index = 0
         for i in range(n):
-            index = min(citations[i], n - i)
-            max_index = max(index, max_index)
-        
-        return max_index
+            if citations[i] >= n - i:
+                return n - i
+        return 0
 
 
 
