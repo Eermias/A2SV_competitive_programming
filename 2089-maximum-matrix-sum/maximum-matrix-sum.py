@@ -13,6 +13,4 @@ class Solution:
                 if matrix[r][c] < 0:
                     negatives += 1
         
-        if negatives % 2:
-            return total - 2 * minn
-        return total
+        return total - 2 * minn if negatives % 2 else total
