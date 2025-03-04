@@ -6,8 +6,11 @@ class Solution:
             if nums[i] <= last:
                 last = nums[i]
             else:
-                count += (nums[i] + last - 1) // last - 1
-                last = nums[i] // ((nums[i] + last - 1) // last)
+                splits = nums[i] // last
+                if nums[i] % last: splits += 1
+
+                count += splits - 1
+                last = nums[i] // splits
         
         return count
 
