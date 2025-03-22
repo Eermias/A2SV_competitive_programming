@@ -1,21 +1,21 @@
 class Solution:
     def punishmentNumber(self, n: int) -> int:
-        
-        def backtrack(i, curr, num, ii):
-            if i == len(num):
-                if curr == ii:
+        self.ans = 0
+        def backtrack(num, indx, k):
+            if indx >= len(num):
+                if k == 0:
+                    self.ans += int(num)
                     return True
                 return False
-            
-            temp = False
-            for j in range(i + 1, len(num) + 1):
-                temp = temp or backtrack(j, curr + int(num[i:j]), num, ii)
-            return temp
-            
+            for i in range(indx, len(num)):
+                curr = num[indx:i+1]
+                k -= int(curr)
+                
+                if backtrack(num, i+1, k):
+                    return True
+                k += int(curr)
+            # return False
 
-        result = 0
-        for i in range(1, n + 1):
-            if backtrack(0, 0, str(i * i), i):
-                result += i * i
-        
-        return result
+        for i in range(1, n+1):
+            backtrack(str(i*i), 0, i)
+        return self.ans
