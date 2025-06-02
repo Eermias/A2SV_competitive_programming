@@ -1,7 +1,9 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        dp = [0] + nums[:]
-        for i in range(2, len(dp)):
-            dp[i] = max(dp[i - 1], dp[i - 2] + dp[i])
+        prev, curr = 0, nums[0]
+        for i in range(1, len(nums)):
+            temp = max(curr, prev + nums[i])
+            prev = curr
+            curr = temp
         
-        return dp[-1]
+        return curr
