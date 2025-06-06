@@ -7,7 +7,7 @@ class Solution:
                 continue
 
             dp[i] += dp[i + 1]
-            if '10' <= s[i : i + 2] <= '26':
+            if s[i : i + 2] <= '26':
                 dp[i] += dp[i + 2]
 
         return dp[0]
