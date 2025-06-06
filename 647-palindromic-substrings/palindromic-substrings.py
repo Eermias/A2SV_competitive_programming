@@ -1,17 +1,16 @@
 class Solution:
     def countSubstrings(self, s: str) -> int:
-        def expand(i, j):
-            l, r = i, j
-            count = 0
-            while l > -1 and r < len(s) and s[l] == s[r]:
-                count += 1
-                l -= 1
-                r += 1
-            return count
+        n = len(s)
+        dp = [[False] * n for _ in range(n)]
+
+        for i in range(n):
+            dp[i][i] = True
         
-        ans = 0
-        for i in range(len(s)):
-            ans += expand(i, i)
-            ans += expand(i, i + 1)
+        palindromes = n
+        for i in range(1, n):
+            for j in range(i):
+                if s[j] == s[i] and (i == j + 1 or dp[j + 1][i - 1]):
+                    palindromes += 1
+                    dp[j][i] = True
         
-        return ans
+        return palindromes
