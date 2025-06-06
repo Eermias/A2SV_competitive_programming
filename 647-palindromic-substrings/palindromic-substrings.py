@@ -3,9 +3,7 @@ class Solution:
         def expand(i, j):
             l, r = i, j
             count = 0
-            while l > -1 and r < len(s):
-                if s[l] != s[r]:
-                    break
+            while l > -1 and r < len(s) and s[l] == s[r]:
                 count += 1
                 l -= 1
                 r += 1
