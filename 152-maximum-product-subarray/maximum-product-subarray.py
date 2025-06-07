@@ -1,19 +1,13 @@
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
-        ans = max(nums)
-        last_neg = 0 if nums[0] >= 0 else nums[0]
-        for i in range(1, len(nums)):
-            if nums[i] == 0:
-                last_neg = 0
-                continue
+        max_product = float("-inf") 
+        curr_min, curr_max = 1, 1
+        for n in nums:
+            temp = curr_min
+            curr_min = min(curr_min * n, curr_max * n, n) 
+            curr_max = max(curr_max * n, temp * n, n)
+            max_product = max(max_product, curr_max)
+        return max_product
 
-            if nums[i - 1]:
-                nums[i] *= nums[i - 1]
-            ans = max(ans, nums[i])
-            if nums[i] < 0:
-                if not last_neg:
-                    last_neg = nums[i]
-                else:
-                    ans = max(nums[i] // last_neg, ans)
         
-        return ans
+        
