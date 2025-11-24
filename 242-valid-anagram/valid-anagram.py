@@ -3,9 +3,13 @@ class Solution:
         if len(s) != len(t):
             return False
         
-        count_s, count_t = defaultdict(int), defaultdict(int)
+        dict_s, dict_t = defaultdict(int), defaultdict(int)
         for i in range(len(s)):
-            count_s[s[i]] += 1
-            count_t[t[i]] += 1
+            dict_s[s[i]] += 1
+            dict_t[t[i]] += 1
         
-        return count_s == count_t
+        for c in t:
+            if dict_t[c] != dict_s[c]:
+                return False
+        
+        return True
